@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "N5RdQktn6AFcomN5+uTbIs8U1nfGg7z4gW49yP9j2WD8OQRy5JdIv3N+pzpFDO2IH6YhZdZ2CRGQeX19amjkSQ==",
+  "success": true,
+  "projectFilePath": "C:\\Demos\\Docker-June2022\\Demos\\dotnet-web-app\\dotnet-web-app.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\vijayv\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.22\\microsoft.netcore.app.host.win-x64.3.1.22.nupkg.sha512"
+  ],
+  "logs": []
+}

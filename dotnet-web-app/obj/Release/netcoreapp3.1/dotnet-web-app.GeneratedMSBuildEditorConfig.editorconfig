@@ -1,0 +1,3 @@
+is_global = true
+build_property.RootNamespace = dotnet_web_app
+build_property.ProjectDir = C:\Demos\Docker-June2022\Demos\dotnet-web-app\

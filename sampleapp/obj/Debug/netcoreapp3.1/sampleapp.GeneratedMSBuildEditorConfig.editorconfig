@@ -1,0 +1,3 @@
+is_global = true
+build_property.RootNamespace = sampleapp
+build_property.ProjectDir = c:\Demos\Docker-June2022\Demos\sampleapp\
