@@ -1,10 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "N5RdQktn6AFcomN5+uTbIs8U1nfGg7z4gW49yP9j2WD8OQRy5JdIv3N+pzpFDO2IH6YhZdZ2CRGQeX19amjkSQ==",
+  "dgSpecHash": "ZqQym1j1iOZMrkuey6wb39MwZdmAfSy0WBpWXlVlAkBw3i5vpJ0mAJJ4ZE5wZrIESPq1fVjC32s5zfLQ4s0KSg==",
   "success": true,
-  "projectFilePath": "C:\\Demos\\Docker-June2022\\Demos\\dotnet-web-app\\dotnet-web-app.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\vijayv\\.nuget\\packages\\microsoft.netcore.app.host.win-x64\\3.1.22\\microsoft.netcore.app.host.win-x64.3.1.22.nupkg.sha512"
-  ],
+  "projectFilePath": "C:\\Demos\\Docker Specialization-(Feb-March 2023)\\Demos\\dotnet-web-app\\dotnet-web-app.csproj",
+  "expectedPackageFiles": [],
   "logs": []
 }

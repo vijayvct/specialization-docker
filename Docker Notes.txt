@@ -1,0 +1,358 @@
+Docker 
+------
+
+Business - Developing Applications 
+
+Deploy the Application
+
+Application Deployment 
+----------------------
+We deploy the build output of the application 
+
+	Angular :- Set JS, HTML, CSS, json.........
+			ng build --prod 
+			
+	.NET or .NET Core :- exe(s), dll(s), appsetting.json......
+		dotnet publish(cli), Publish the project using Visual Studio 
+		
+	Java :- jar,war
+		
+		
+Problems in Application Deployment 
+----------------------------------
+
+Client A :- give me the build output for deployment 
+
+Client B :- give access to their VMs, deploy the application to the production env(VM)
+
+Expectation:-
+	The app must work exactly in the same manner in the Production env as it was working in DEV env
+	
+Do you meet expectations
+	No/YES/Not Sure 
+	
+Possible Reasons for not working in PROD Env
+--------------------------------------------
+The required app configuration may have not been done on the PROD env 
+The required runtime version may be different than that of the DEV runtime 
+The required runtime env may be available on the client machine
+
+What is a container?
+--------------------
+It is a strandard unit of software 
+
+It consist of the code and depenedencies to run that code 
+	eg:-
+		Node App :- NodeJS Code + NodeJS Runtime 
+		.NET Core App :- .NET Code + .NET Runtime 
+		
+Containerization is a process of running you applications as containers
+
+It uses the OS Virtualization 
+
+RAM is divided into 2 sections 
+
+Kernel Spaces :- All OS related process runs in the Kernel Space 
+
+Application and User Space :- All application executed by the user are executed 
+
+Container technology was firstly developed for LINUX OS
+
+Namespaces
+	-Provide isolation to containers
+Control Groups
+	-Provide a control access and how much resource should be assigned to the container 
+	
+Images :- It is read-only copy of code and it depenedencies
+
+Container :- It is the running instance of the code in the image
+
+Tools 
+-----
+SSH Client
+	Putty 
+	Mobaxterm 
+	CMD (ssh)
+	
+Docker Desktop (Windows, MAC, Linux)
+------------------------------------
+Windows (Enable HW Virtualization (BIOS) + Hyper-V (Control Panel))
+
+	Docker Desktop creates a small linux VM and run the container in the VM 
+	
+Linux (Any Distribution)
+------------------------
+Follow the installation instruction from the official site to install and used Docker on any linux system (On-Prem or Cloud)
+
+Play with Docker (Requires a Docker HUB ID)
+
+MAC :- Zen Term Lite
+
+After Connecting to the VM 
+--------------------------
+sudo -i :- to switch to the root user 
+
+apt-get update :- install any available updates 
+
+apt install docker.io -y :- install docker on the system 
+
+Basic docker commands 
+---------------------
+docker version or --version  :- returns the version of docker installed on the system
+
+docker info :- display the system-wide information
+
+docker system df :- show docker disk usage 
+
+docker pull <imagename>:<tagname> - Pulls or download a image with the specified tagname
+
+docker run <imagename>:<tagname> - create a container based on the specified image and tagname. If the image is not available on the Docker host , it will first download the image and then create the container out of it
+
+	docker run hello-world
+	
+Images 
+------
+docker images 
+	or
+docker image ls :-lists all the images downloaded locally on the docker host
+
+docker pull <imagename>:<tagname>  :- downloade the image with the specified tag name from the docker registry 
+
+docker image rm <imagename>:<tagname>
+	or
+docker rmi <imagename>:<tagname> :- remove the image with the specified tagname from the docker host 
+
+docker inspect <imagename>:<tagname> :- list the details of the image in JSON Format 
+
+Image for Node JS Application 
+
+	Alpine - Layer 1
+
+	Node JS Runtime - Layer 2  
+	
+	Dependencies - Layer 3
+	
+	Code - Layer 4
+	
+docker image history :- shows history of an image 
+
+docker image build :- Build a docker image from a DockerFile 
+
+Containers
+----------
+docker run <imagename>:<tagname>
+	or
+docker container run <imagename>:<tagname> :- Create the container of the specified image 
+
+	--name :- help provide a name to the container
+	
+	-d :- help to run a conatiner in the detached 
+	
+	-p :- to specify port mapping 
+	
+docker container logs <containername or containerid> :- Fetch the log of container 
+
+docker container start <containername or containerid> :- Start the container
+
+docker container stop <containername or containerid> :- Stops the container
+
+docker container rm <containername or containerid> :- remove the container 
+
+docker rm <containername or containerid>
+
+docker ps :- to list all the running or active containers
+
+docker ps -a :- to list all the container (running and stopped)
+
+Creating a nGinx Container 
+--------------------------
+
+docker run nginx :- create a container and runs it without port mapping
+
+docker run -p <hostport>:<containerport> <imagename> :- creates a conatiner with port mapping 
+
+	docker run -p 8080:80 nginx 
+	
+	docker run -p 8081:80 httpd
+	
+	docker run -d -p 8082 --name mynginx nginx :- create a container with port mapping,name and in detached mode 
+	
+	docker run -it <imagename>:<tagname> :- It will create a container with interactive mode
+	
+		docker run -it ubuntu
+	
+	Detaching from the container 
+	
+	USE CTRL + PQ to detach from an interactive container and return back to host prompt. In this approach the container continues to run
+	
+	Attaching back to a running container 
+	
+		docker attach <containername or containerid>
+		
+	docker stop $(docker ps -a -q) :- stops all the containers 
+	
+	docker rm $(docker ps -a -q) :- delete or removes all the containers 
+	
+Dockerfile 
+-----------
+FROM baseimage 
+
+git clone https://github.com/vijayvct/specialization-docker.git
+
+docker build -t <nameofimage> .
+
+docker build -t vijay-mydemoimage .
+
+docker build -t <name>-nodeapp .
+
+dotnet publish -c Release
+
+Steps to Publish Image to a Docker Container Registry 
+
+1)Login to Docker Hub and create a repository 
+
+2)On the docker host used the following and log into the docker hub account 
+
+	docker login 
+	
+		provide docker hub credentials 
+		
+3)Change you to image to the respository name 
+
+	docker tag sourcename targetname
+	
+4)Push the image to the docker hub 
+
+	docker push <name of the image>
+	
+	docker push vijayvct/nodeapp
+	
+	docker run -d -p 9900:3000 vijayvct/nodeapp
+	
+Docker Networking 
+-----------------
+
+Docket Network Drivers 
+
+1.bridge :- The default network driver. Bridge network are usually used when your application run in standalone containers that need to communicate 
+
+2.host :- For standalone containers to communicate with docker host. It uses the host network directly.
+
+3.overlay :- It allows you to connect multiple docker daemons(docker host) and enable swarm services to communicate with each other.
+
+4.macvlan :- It allows you to assign a mac address to container , making it appear as a physical device on your network.
+
+5.ipvlan :- It gives used control over both IPV4 and IPV6 addressing 
+
+6.none :- For this container disable all networking. Usually used in conjunction with custom drivers
+
+Network plugin :- You can install and use third-party plugins with docker. These plugin are available on the Docker Hub from third party vendors  
+
+docker network --help :- to get the details of the command 
+
+docker network ls :- to list all the networks
+
+docker network create <networkname> :- to create a custom network 
+
+docker network inspect <networkname> :- display the details about the network 
+
+1.Create a new named bridge network 
+2.Create 2 containers and associate them to the new network 
+3.Try to communicate to the other container form with in one container using IP address or the container name 
+
+docker network create -d <<driver>> <<name>>
+
+docker network creare -d bridge mynet 
+			OR 
+docker network create mynet :- This command will create network named mynet with bridge driver 
+
+docker network create -d overlay my-mulihost-network :- This will create a overlay network 
+
+docker run -itd --network mynet --name c1 alpine 
+
+Using Host Network 
+------------------
+
+docker run --rm -d --network host --name mynginx nginx 
+
+Docker Compose 
+--------------
+Docker Compose is tools for defining and running multi-container docker application.
+
+It uses YAML files to configure your application services then with a single command you can create and start all the services from your configuration 
+
+You need to install docker compose on the docker host.
+
+	apt install docker-compose -Y - (Ubuntu) 
+	
+Volumes 
+-------
+Volumes allows you to store or persist data on the host system instead of container 
+
+Volumes are folders on your host system 
+
+3 Types Volumnes 
+----------------
+Anonymous Volume
+Named Volume
+Host Volume or Bind Volume 
+	-It is Explicitly created and bounded to a container 
+	-It is part of the docker host (machine) file system 
+	
+	docker volume --help :- to get help related to the command 
+	
+	docker volume ls :- list all the volumes 
+	
+	docker volume create :- creates a volume
+	
+	docker volume inspect :- inspect the volume
+	
+	Anonymous Volume
+	----------------
+	docker run -it --name alpine1 -v /data01 alpine
+	
+	-v /data01 :- on host system it maps to a random-hash directory under /var/lib/docker directory 
+	
+	Named Volume
+	------------
+	
+	docker run -it --name alpine2 -v myvolume01:/data01 alpine 
+	
+	Host Volume
+	-----------
+	
+	mkdir data02
+	
+	docker run -it --name alpine3 -v /data02:/data02 alpine
+	
+	--------------------------------------------------------------
+	
+	1.Create a jenkins container 
+	
+	docker run -d --name jenkins1 -p 8080:8080 -p 50000:50000 -v jenkinsjobdata:/var/jenkins_home jenkins/jenkins
+	
+	2. Create Job on Jenkins Portal 
+	
+	3. Check for Job info on the container 
+	
+		docker volume ls 
+		
+	4. Delete the jenkins container 
+	
+		docker stop jenkins1
+		docker rm jenkins1
+		
+	5. Create a new container with existing volumes
+	
+		docker run -d --name jenkins2 -p 8080:8080 -p 50000:50000 -v jenkinsjobdata:/var/jenkins_home jenkins/jenkins
+	
+	
+Docker Swarm 
+------------
+	docker swarm init
+	
+	docker swarm join --token SWMTKN-1-4jjuq3s5rqqtcspglu5d8qmuhgc54vixq5hb1bmnj7i4rk67sk-blxxwrn0pby74s8h2iz3rqi0r 10.1.0.4:2377
+
+https://docs.docker.com/engine/swarm/swarm-tutorial/
+
+
