@@ -351,7 +351,7 @@ Docker Swarm
 ------------
 	docker swarm init
 	
-	docker swarm join --token SWMTKN-1-4jjuq3s5rqqtcspglu5d8qmuhgc54vixq5hb1bmnj7i4rk67sk-blxxwrn0pby74s8h2iz3rqi0r 10.1.0.4:2377
+	
 
 https://docs.docker.com/engine/swarm/swarm-tutorial/
 
